@@ -1,0 +1,6 @@
+@YGOReviewHub_HostAddress = http://localhost:5212
+
+GET {{YGOReviewHub_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

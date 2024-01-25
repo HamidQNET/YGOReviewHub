@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34309.116
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YGOReviewHub", "YGOReviewHub\YGOReviewHub.csproj", "{FC87A89A-F0C1-47EA-BAA6-D327C21E32BB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FC87A89A-F0C1-47EA-BAA6-D327C21E32BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC87A89A-F0C1-47EA-BAA6-D327C21E32BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC87A89A-F0C1-47EA-BAA6-D327C21E32BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC87A89A-F0C1-47EA-BAA6-D327C21E32BB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7D78E050-CF47-491B-BFDF-3CC94BE33287}
+	EndGlobalSection
+EndGlobal
