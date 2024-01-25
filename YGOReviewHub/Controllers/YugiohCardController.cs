@@ -28,5 +28,37 @@ namespace YGOReviewHub.Controllers
 
             return Ok(yugiohcards);
         }
+
+        [HttpGet("{yugiId}")]
+        [ProducesResponseType(200, Type = typeof(YugiohCard))]
+        [ProducesResponseType(400)]
+        public IActionResult GetYugiohCard(int yugiId)
+        {
+            if (!_yugiohcardRepository.YugiohCardExists(yugiId))
+                return NotFound();
+
+            var yugiohcard = _yugiohcardRepository.GetYugiohCard(yugiId);
+
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            return Ok(yugiohcard);
+        }
+
+        [HttpGet("{yugiId}/rating")]
+        [ProducesResponseType(200, Type = typeof(decimal))]
+        [ProducesResponseType(400)]
+        public IActionResult GetYugiohCardRating(int yugiId)
+        {
+            if(!_yugiohcardRepository.YugiohCardExists(yugiId))
+                return NotFound();
+
+            var rating = _yugiohcardRepository.GetYugiohCardRating(yugiId);
+
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            return Ok(rating);
+        }
     }
 }
