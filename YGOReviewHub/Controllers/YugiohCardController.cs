@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
+using YGOReviewHub.Dto;
 using YGOReviewHub.Interfaces;
 using YGOReviewHub.Models;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
@@ -11,17 +13,19 @@ namespace YGOReviewHub.Controllers
     public class YugiohCardController : Controller
     {
         private readonly IYugiohCardRepository _yugiohcardRepository;
+        private readonly IMapper _mapper;
 
-        public YugiohCardController(IYugiohCardRepository yugiohCardRepository)
+        public YugiohCardController(IYugiohCardRepository yugiohCardRepository, IMapper mapper)
         {
             _yugiohcardRepository = yugiohCardRepository;
+            _mapper = mapper;
         }
 
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<YugiohCard>))]
         public IActionResult GetYugiohCards()
         {
-            var yugiohcards = _yugiohcardRepository.GetYugiohCards();
+            var yugiohcards = _mapper.Map<List<YugiohCardDto>>(_yugiohcardRepository.GetYugiohCards());
             
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -37,7 +41,7 @@ namespace YGOReviewHub.Controllers
             if (!_yugiohcardRepository.YugiohCardExists(yugiId))
                 return NotFound();
 
-            var yugiohcard = _yugiohcardRepository.GetYugiohCard(yugiId);
+            var yugiohcard = _mapper.Map<YugiohCardDto>(_yugiohcardRepository.GetYugiohCard(yugiId));
 
             if (!ModelState.IsValid)
                 return BadRequest();
