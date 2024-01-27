@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("YGOReviewHub")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e9f731245fc0b583cc9969937b93763d929252d3")]
 [assembly: System.Reflection.AssemblyProductAttribute("YGOReviewHub")]
 [assembly: System.Reflection.AssemblyTitleAttribute("YGOReviewHub")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

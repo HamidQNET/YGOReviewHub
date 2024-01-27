@@ -11,6 +11,9 @@ namespace YGOReviewHub.Helper
             CreateMap<YugiohCard, YugiohCardDto>();
             CreateMap<Models.Type, TypeDto>();
             CreateMap<Review, ReviewDto>();
+            CreateMap<Reviewer, ReviewerDto>();
+            CreateMap<Owner, OwnerDto>();
+            CreateMap<Deck, DeckDto>();
         }
     }
 }
