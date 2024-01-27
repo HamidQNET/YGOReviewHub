@@ -10,6 +10,7 @@ namespace YGOReviewHub.Helper
         {
             CreateMap<YugiohCard, YugiohCardDto>();
             CreateMap<Models.Type, TypeDto>();
+            CreateMap<Review, ReviewDto>();
         }
     }
 }
