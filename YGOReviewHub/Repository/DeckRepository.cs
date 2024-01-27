@@ -14,9 +14,9 @@ namespace YGOReviewHub.Repository
             _context = context;
         }
 
-        public bool DeckExists(int Id)
+        public bool DeckExists(int deckId)
         {
-            return _context.Decks.Any(d => d.Id == Id);
+            return _context.Decks.Any(d => d.Id == deckId);
         }
 
         public Deck GetDeck(int deckId)

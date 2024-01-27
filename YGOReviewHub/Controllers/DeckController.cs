@@ -38,13 +38,13 @@ namespace YGOReviewHub.Controllers
         [HttpGet("{deckId}")]
         [ProducesResponseType(200, Type = typeof(Deck))]
         [ProducesResponseType(400)]
-        public IActionResult GetDeck(int id)
+        public IActionResult GetDeck(int deckId)
         {
-            if (!_deckRepository.DeckExists(id))
+            if (!_deckRepository.DeckExists(deckId))
                 return NotFound();
 
             var deck = _mapper.Map<DeckDto>(
-                _deckRepository.GetDeck(id));
+                _deckRepository.GetDeck(deckId));
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -52,7 +52,7 @@ namespace YGOReviewHub.Controllers
             return Ok(deck);
         }
 
-        [HttpGet("/owners/{ownerId}")]
+        [HttpGet("/ownersdeck/{ownerId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(200, Type = typeof(Deck))]
         public IActionResult GetDeckOfAOwner(int ownerId)
