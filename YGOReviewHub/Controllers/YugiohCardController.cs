@@ -13,11 +13,13 @@ namespace YGOReviewHub.Controllers
     public class YugiohCardController : Controller
     {
         private readonly IYugiohCardRepository _yugiohcardRepository;
+        private readonly IReviewerRepository _reviewerRepository;
         private readonly IMapper _mapper;
 
-        public YugiohCardController(IYugiohCardRepository yugiohCardRepository, IMapper mapper)
+        public YugiohCardController(IYugiohCardRepository yugiohCardRepository, IReviewerRepository reviewerRepository ,IMapper mapper)
         {
             _yugiohcardRepository = yugiohCardRepository;
+            _reviewerRepository = reviewerRepository;
             _mapper = mapper;
         }
 
@@ -63,6 +65,38 @@ namespace YGOReviewHub.Controllers
                 return BadRequest();
 
             return Ok(rating);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        public IActionResult CreateYugiohCard([FromQuery] int ownerId, [FromQuery] int typeId, [FromBody] YugiohCardDto yugiohcardCreate)
+        {
+            if (yugiohcardCreate == null)
+                return BadRequest(ModelState);
+
+            var yugiohcards = _yugiohcardRepository.GetYugiohCards()
+                .Where(y => y.Name.Trim().ToUpper() == yugiohcardCreate.Name.TrimEnd().ToUpper())
+                .FirstOrDefault();
+
+            if (yugiohcards != null)
+            {
+                ModelState.AddModelError("", "Yugiohcard already exists!");
+                return StatusCode(422, ModelState);
+            }
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var yugiohcardMap = _mapper.Map<YugiohCard>(yugiohcardCreate);
+
+            if (!_yugiohcardRepository.CreateYugiohCard(ownerId, typeId, yugiohcardMap))
+            {
+                ModelState.AddModelError("", "Something went wrong while saving! D:");
+                return StatusCode(500, ModelState);
+            }
+
+            return Ok("Succesfully Created!!");
         }
     }
 }

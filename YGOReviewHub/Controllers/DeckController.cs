@@ -66,5 +66,36 @@ namespace YGOReviewHub.Controllers
             return Ok(deck);
         }
 
+        [HttpPost]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        public IActionResult CreateDeck([FromBody] DeckDto deckCreate)
+        {
+            if (deckCreate == null)
+                return BadRequest(ModelState);
+            var deck = _deckRepository.GetDecks()
+                .Where(d => d.Name.Trim().ToUpper() == deckCreate.Name.TrimEnd().ToUpper())
+                .FirstOrDefault();
+
+            if (deck != null)
+            {
+                ModelState.AddModelError("", "Model already exists!");
+                return StatusCode(422, ModelState);
+            }
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var deckMap = _mapper.Map<Deck>(deckCreate);
+
+            if (!_deckRepository.CreateDeck(deckMap))
+            {
+                ModelState.AddModelError("", "Something went wrong wile saving.. :(");
+                return StatusCode(500, ModelState);
+            }
+
+            return Ok("Succesfully Created! :D");
+        }
+
     }
 }

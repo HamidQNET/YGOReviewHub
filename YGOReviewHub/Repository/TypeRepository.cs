@@ -13,6 +13,13 @@ namespace YGOReviewHub.Repository
             _context = context;
         }
 
+        public bool CreateType(Models.Type type)
+        {
+            _context.Add(type);
+
+            return Save();
+        }
+
         public Models.Type GetType(int Id)
         {
             return _context.Types.Where(y => y.Id == Id).FirstOrDefault();
@@ -26,6 +33,12 @@ namespace YGOReviewHub.Repository
         public ICollection<YugiohCard> GetYugiohCardByType(int typeId)
         {
             return _context.YugiohCardTypes.Where(t => t.TypeId == typeId).Select(y => y.YugiohCard).ToList();
+        }
+
+        public bool Save()
+        {
+            var saved = _context.SaveChanges();
+            return saved > 0 ? true : false;    
         }
 
         public bool TypeExists(int id)

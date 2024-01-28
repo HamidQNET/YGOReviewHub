@@ -62,5 +62,36 @@ namespace YGOReviewHub.Controllers
                 return BadRequest();
             return Ok(yugiohcards);
         }
+
+        [HttpPost]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        public IActionResult CreateType([FromBody] TypeDto typeCreate)
+        {
+            if (typeCreate == null)
+                return BadRequest(ModelState);
+
+            var type = _typeRepository.GetTypes()
+                .Where(t => t.Name.Trim().ToUpper() == typeCreate.Name.TrimEnd().ToUpper())
+                .FirstOrDefault();
+
+            if(type == null)
+            {
+                ModelState.AddModelError("", "Type already exists!");
+                return StatusCode(422, ModelState);
+            }
+
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var typeMap = _mapper.Map<Models.Type>(typeCreate);
+
+            if (!_typeRepository.CreateType(typeMap))
+            {
+                ModelState.AddModelError("", "Something went wrong while saving.. :(");
+                return StatusCode(500, ModelState);
+            }
+            return Ok("Succesfully Created!");
+        }
     }
 }

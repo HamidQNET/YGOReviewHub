@@ -9,6 +9,8 @@ namespace YGOReviewHub.Interfaces
         ICollection<Owner> GetOwnerOfAYugiohCard(int yugiId);
         ICollection<YugiohCard> GetYugiohCardByOwner(int ownerId);
         bool OwnerExists(int ownerId);
+        bool CreateOwner(Owner owner);
+        bool Save();
 
     }
 }

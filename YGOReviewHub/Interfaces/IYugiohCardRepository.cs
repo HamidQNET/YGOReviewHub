@@ -9,5 +9,7 @@ namespace YGOReviewHub.Interfaces
         YugiohCard GetYugiohCard(string name);
         decimal GetYugiohCardRating(int yugiId);
         bool YugiohCardExists(int yugiId);
+        bool CreateYugiohCard(int ownerId, int typeId, YugiohCard yugiohcard);
+        bool Save();
     }
 }

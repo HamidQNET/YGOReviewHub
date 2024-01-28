@@ -14,6 +14,12 @@ namespace YGOReviewHub.Repository
             _context = context;
         }
 
+        public bool CreateDeck(Deck deck)
+        {
+            _context.Add(deck);
+            return Save();
+        }
+
         public bool DeckExists(int deckId)
         {
             return _context.Decks.Any(d => d.Id == deckId);
@@ -37,6 +43,12 @@ namespace YGOReviewHub.Repository
         public ICollection<Owner> GetOwnerOfADeck(int deckId)
         {
             return _context.Owners.Where(d => d.Deck.Id == deckId).ToList();
+        }
+
+        public bool Save()
+        {
+            var saved = _context.SaveChanges();
+            return saved > 0 ? true : false;
         }
     }
 }

@@ -13,6 +13,32 @@ namespace YGOReviewHub.Repository
             _context = context;
         }
 
+        public bool CreateYugiohCard(int ownerId, int typeId, YugiohCard yugiohcard)
+        {
+            var yugiohcardOwnerEntity = _context.Owners.Where(a => a.Id == ownerId).FirstOrDefault(); 
+            var type = _context.Types.Where(a => a.Id == typeId).FirstOrDefault();
+
+            var yugiohcardOwner = new YugiohCardOwner()
+            {
+                Owner = yugiohcardOwnerEntity,
+                YugiohCard = yugiohcard
+            };
+
+            _context.Add(yugiohcardOwner);
+
+            var yugiohcardType = new YugiohCardType()
+            {
+                Type = type,
+                YugiohCard = yugiohcard
+            };
+
+            _context.Add(yugiohcardType);
+
+            _context.Add(yugiohcard);
+
+            return Save();
+        }
+
         public YugiohCard GetYugiohCard(int id)
         {
             return _context.YugiohCards.Where(y => y.Id == id).FirstOrDefault();
@@ -36,6 +62,12 @@ namespace YGOReviewHub.Repository
         public ICollection<YugiohCard> GetYugiohCards()
         {
             return _context.YugiohCards.OrderBy(y => y.Id).ToList();
+        }
+
+        public bool Save()
+        {
+            var saved = _context.SaveChanges();
+            return saved > 0 ? true : false;
         }
 
         public bool YugiohCardExists(int yugiId)

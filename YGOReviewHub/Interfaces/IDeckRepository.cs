@@ -9,6 +9,8 @@ namespace YGOReviewHub.Interfaces
         Deck GetDeckByOwner(int ownerId);
         ICollection<Owner> GetOwnerOfADeck(int deckId);
         bool DeckExists(int deckId);
+        bool CreateDeck(Deck deck);
+        bool Save();
 
     }
 }
