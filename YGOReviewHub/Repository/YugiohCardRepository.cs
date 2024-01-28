@@ -39,6 +39,12 @@ namespace YGOReviewHub.Repository
             return Save();
         }
 
+        public bool DeleteYugiohCard(YugiohCard yugiohCard)
+        {
+            _context.Remove(yugiohCard);
+            return Save();
+        }
+
         public YugiohCard GetYugiohCard(int id)
         {
             return _context.YugiohCards.Where(y => y.Id == id).FirstOrDefault();
@@ -68,6 +74,12 @@ namespace YGOReviewHub.Repository
         {
             var saved = _context.SaveChanges();
             return saved > 0 ? true : false;
+        }
+
+        public bool UpdateYugiohCard(int ownerId, int typeId, YugiohCard yugiohcard)
+        {
+            _context.Update(yugiohcard);
+            return Save();
         }
 
         public bool YugiohCardExists(int yugiId)

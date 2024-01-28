@@ -25,6 +25,12 @@ namespace YGOReviewHub.Repository
             return _context.Decks.Any(d => d.Id == deckId);
         }
 
+        public bool DeleteDeck(Deck deck)
+        {
+            _context.Remove(deck);
+            return Save();  
+        }
+
         public Deck GetDeck(int deckId)
         {
             return _context.Decks.Where(d => d.Id == deckId).FirstOrDefault();
@@ -49,6 +55,12 @@ namespace YGOReviewHub.Repository
         {
             var saved = _context.SaveChanges();
             return saved > 0 ? true : false;
+        }
+
+        public bool UpdateDeck(Deck deck)
+        {
+            _context.Update(deck);
+            return Save();
         }
     }
 }

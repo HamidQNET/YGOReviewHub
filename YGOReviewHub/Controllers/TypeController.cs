@@ -28,7 +28,7 @@ namespace YGOReviewHub.Controllers
         {
             var types = _mapper.Map<List<TypeDto>>(_typeRepository.GetTypes());
 
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             return Ok(types);
@@ -75,13 +75,13 @@ namespace YGOReviewHub.Controllers
                 .Where(t => t.Name.Trim().ToUpper() == typeCreate.Name.TrimEnd().ToUpper())
                 .FirstOrDefault();
 
-            if(type == null)
+            if (type == null)
             {
                 ModelState.AddModelError("", "Type already exists!");
                 return StatusCode(422, ModelState);
             }
 
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var typeMap = _mapper.Map<Models.Type>(typeCreate);
@@ -92,6 +92,59 @@ namespace YGOReviewHub.Controllers
                 return StatusCode(500, ModelState);
             }
             return Ok("Succesfully Created!");
+        }
+
+        [HttpPut("{typeId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public IActionResult UpdateType(int typeId, [FromBody] TypeDto updatedType)
+        {
+            if (updatedType == null)
+                return BadRequest(ModelState);
+
+            if (typeId != updatedType.Id)
+                return BadRequest(ModelState);
+
+            if (!_typeRepository.TypeExists(typeId))
+                return NotFound();
+
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var typeMap = _mapper.Map<Models.Type>(updatedType);
+
+            if (!_typeRepository.UpdateType(typeMap))
+            {
+                ModelState.AddModelError("", "Something went wrong updating type...");
+                return StatusCode(500, ModelState);
+            }
+
+            return NoContent();
+        }
+
+        [HttpDelete("{typeId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public IActionResult DeleteType(int typeId)
+        {
+            if (!_typeRepository.TypeExists(typeId))
+            {
+                return NotFound();
+            }
+
+            var typeToDelete = _typeRepository.GetType(typeId);
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            if (!_typeRepository.DeleteType(typeToDelete))
+            {
+                ModelState.AddModelError("", "Something went wrong deleting type...");
+            }
+
+            return NoContent();
         }
     }
 }

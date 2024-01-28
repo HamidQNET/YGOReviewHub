@@ -9,6 +9,8 @@ namespace YGOReviewHub.Interfaces
         ICollection<YugiohCard> GetYugiohCardByType(int typeId);
         bool TypeExists(int id);
         bool CreateType(Models.Type type);
+        bool UpdateType(Models.Type type);
+        bool DeleteType(Models.Type type);
         bool Save();
     }
 }

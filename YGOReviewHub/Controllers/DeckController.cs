@@ -97,5 +97,58 @@ namespace YGOReviewHub.Controllers
             return Ok("Succesfully Created! :D");
         }
 
+        [HttpPut("{deckId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public IActionResult UpdateDeck(int deckId, [FromBody] DeckDto updatedDeck)
+        {
+            if (updatedDeck == null)
+                return BadRequest(ModelState);
+
+            if (deckId != updatedDeck.Id)
+                return BadRequest(ModelState);
+
+            if (!_deckRepository.DeckExists(deckId))
+                return NotFound();
+
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var deckMap = _mapper.Map<Deck>(updatedDeck);
+
+            if (!_deckRepository.UpdateDeck(deckMap))
+            {
+                ModelState.AddModelError("", "Something went wrong updating deck...");
+                return StatusCode(500, ModelState);
+            }
+
+            return NoContent();
+        }
+
+        [HttpDelete("{deckId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public IActionResult DeleteDeck(int deckId)
+        {
+            if (!_deckRepository.DeckExists(deckId))
+            {
+                return NotFound();
+            }
+
+            var deckToDelete = _deckRepository.GetDeck(deckId);
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            if (!_deckRepository.DeleteDeck(deckToDelete))
+            {
+                ModelState.AddModelError("", "Something went wrong deleting a deck...");
+            }
+
+            return NoContent();
+        }
+
     }
 }

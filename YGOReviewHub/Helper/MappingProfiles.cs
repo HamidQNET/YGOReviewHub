@@ -13,7 +13,9 @@ namespace YGOReviewHub.Helper
             CreateMap<Models.Type, TypeDto>();
             CreateMap<TypeDto, Models.Type>();
             CreateMap<Review, ReviewDto>();
+            CreateMap<ReviewDto, Review>();
             CreateMap<Reviewer, ReviewerDto>();
+            CreateMap<ReviewerDto, Reviewer>();
             CreateMap<Owner, OwnerDto>();
             CreateMap<OwnerDto, Owner>();
             CreateMap<Deck, DeckDto>();

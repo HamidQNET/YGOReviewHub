@@ -20,6 +20,12 @@ namespace YGOReviewHub.Repository
             return Save();
         }
 
+        public bool DeleteType(Models.Type type)
+        {
+            _context.Remove(type);
+            return Save();
+        }
+
         public Models.Type GetType(int Id)
         {
             return _context.Types.Where(y => y.Id == Id).FirstOrDefault();
@@ -44,6 +50,12 @@ namespace YGOReviewHub.Repository
         public bool TypeExists(int id)
         {
             return _context.Types.Any(y => y.Id == id);
+        }
+
+        public bool UpdateType(Models.Type type)
+        {
+            _context.Update(type);
+            return Save();
         }
     }
 }
