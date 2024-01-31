@@ -39,5 +39,6 @@ Make sure you have the NuGet packages like
 - AutoMapper
 - automapper dependency injection
 
-- Make sure in your main project file this is set to false => < InvariantGlobalization > false < / InvariantGlobalization >
+- Make sure in your main project file this is set to false:
+- < InvariantGlobalization > false < / InvariantGlobalization >
 
